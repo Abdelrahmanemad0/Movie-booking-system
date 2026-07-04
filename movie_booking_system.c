@@ -1,7 +1,20 @@
+/*
+ * Movie Ticket Booking System
+ *
+ * A simple console-based ticket booking system for a 5x6 seating hall.
+ * Lets a user pick a movie, book/cancel seats, and pay by cash or Visa,
+ * logging each transaction to transaction_history.txt.
+ *
+ * Renamed from "final code.c" (which had a space in the filename) to
+ * movie_booking_system.c so it can be compiled without quoting the path:
+ *   gcc movie_booking_system.c -o movie_booking
+ *   ./movie_booking
+ */
 
 #include <stdio.h>
 #include <ctype.h>
-    float CashPaid;
+
+float CashPaid;
 
 // Structure to display movies and payment
 struct Movie {
@@ -149,8 +162,14 @@ int main() {
             printf("Choose your booked seat:");
             scanf(" %c %d", &seat, &row);
             seat = toupper(seat);
-           
-            if (seats[row - 1][seat - 'A'] == 'X') {
+
+            // Same cinema hall limitation as booking: without this check,
+            // an out-of-range row/seat (e.g. row 0 or a letter past 'F')
+            // indexes outside the seats[5][6] array, which is undefined
+            // behavior and can crash the program.
+            if (row < 1 || row > 5 || seat < 'A' || seat > 'F') {
+                printf("Invalid seat!\n");
+            } else if (seats[row - 1][seat - 'A'] == 'X') {
                 seats[row - 1][seat - 'A'] = '_';
                 printf("Seat %c%d has been cancelled.\n", seat, row);
                 // Deduct the price of the cancelled seat from the total amount
