@@ -1,0 +1,16 @@
+# Compiled binaries
+movie_booking
+*.exe
+*.out
+*.o
+
+# Runtime-generated transaction log
+transaction_history.txt
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
